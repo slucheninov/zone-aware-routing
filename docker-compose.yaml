@@ -1,0 +1,82 @@
+version: '3'
+services:
+  envoy_main:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: "--config-path /etc/envoy/config.yaml"
+    ports:
+      - "8000:8000"
+      - "9901:9901" # for stat
+    volumes:
+      - "./envoy-main.yaml:/etc/envoy/config.yaml:ro"
+    networks:
+      - envoy
+###################################
+  envoy-gke-us-central1-a-1:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-a-1
+    expose:
+      - "8001"
+    volumes:
+      - "./envoy-gke-us-central1-a-1.yaml:/etc/envoy/config.yaml:ro"
+  envoy-gke-us-central1-a-2:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-a-2
+    expose:
+      - "8002"
+    volumes:
+      - "./envoy-gke-us-central1-a-2.yaml:/etc/envoy/config.yaml:ro"
+  envoy-gke-us-central1-a-3:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-a-3
+    expose:
+      - "8002"
+    volumes:
+      - "./envoy-gke-us-central1-a-3.yaml:/etc/envoy/config.yaml:ro"
+  envoy-gke-us-central1-b-1:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-b-1
+    expose:
+      - "8011"
+    volumes:
+      - "./envoy-gke-us-central1-b-1.yaml:/etc/envoy/config.yaml:ro"
+  envoy-gke-us-central1-b-2:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-b-2
+    expose:
+      - "8012"
+    volumes:
+      - "./envoy-gke-us-central1-b-2.yaml:/etc/envoy/config.yaml:ro"
+  envoy-gke-us-central1-b-3:
+    image: "envoyproxy/envoy:v1.18.2"
+    command: --config-path /etc/envoy/config.yaml
+    networks:
+      envoy:
+        aliases:
+          - envoy-gke-us-central1-b-3
+    expose:
+      - "8012"
+    volumes:
+      - "./envoy-gke-us-central1-b-3.yaml:/etc/envoy/config.yaml:ro"
+
+networks:
+  envoy: {}
